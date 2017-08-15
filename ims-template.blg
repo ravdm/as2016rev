@@ -1,0 +1,57 @@
+This is BibTeX, Version 0.99d (TeX Live 2013/Debian)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: ims-template.aux
+The style file: plain.bst
+Database file #1: rvdm.bib
+""" immediately follows a field name---line 143 of file rvdm.bib
+ :  pages
+ :       "568-591"}
+I'm skipping whatever remains of this entry
+A bad cross reference---entry "donoho03"
+refers to entry "conf/nips/2003", which doesn't exist
+A bad cross reference---entry "blanchard14"
+refers to entry "DBLP:conf/aistats/2014", which doesn't exist
+Warning--I didn't find a database entry for "conf/nips/2003"
+Warning--I didn't find a database entry for "DBLP:conf/aistats/2014"
+You've used 19 entries,
+            2118 wiz_defined-function locations,
+            629 strings with 7382 characters,
+and the built_in function-call counts, 6591 in all, are:
+= -- 655
+> -- 297
+< -- 3
++ -- 118
+- -- 97
+* -- 461
+:= -- 1098
+add.period$ -- 64
+call.type$ -- 19
+change.case$ -- 99
+chr.to.int$ -- 0
+cite$ -- 19
+duplicate$ -- 250
+empty$ -- 530
+format.name$ -- 97
+if$ -- 1392
+int.to.chr$ -- 0
+int.to.str$ -- 19
+missing$ -- 24
+newline$ -- 99
+num.names$ -- 40
+pop$ -- 104
+preamble$ -- 1
+purify$ -- 85
+quote$ -- 0
+skip$ -- 166
+stack$ -- 0
+substring$ -- 439
+swap$ -- 47
+text.length$ -- 3
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 66
+warning$ -- 0
+while$ -- 62
+width$ -- 21
+write$ -- 216
+(There were 3 error messages)

@@ -1,0 +1,117 @@
+\begin{thebibliography}{10}
+
+\bibitem{allman09}
+Elizabeth~S. Allman, Catherine Matias, and John~A. Rhodes.
+\newblock Identifiability of parameters in latent structure models with many
+  observed variables.
+\newblock {\em Ann. Statist.}, 37(6A):3099--3132, 12 2009.
+
+\bibitem{anandkumar14}
+Animashree Anandkumar, Rong Ge, Daniel Hsu, Sham~M. Kakade, and Matus
+  Telgarsky.
+\newblock Tensor decompositions for learning latent variable models.
+\newblock {\em Journal of Machine Learning Research}, 15:2773--2832, 2014.
+
+\bibitem{anderson14}
+Joseph Anderson, Mikhail Belkin, Navin Goyal, Luis Rademacher, and James Voss.
+\newblock The more, the merrier: the blessing of dimensionality for learning
+  large gaussian mixtures.
+\newblock In {\em Proceedings of The 27th Conference on Learning Theory}, pages
+  1135--1164, 2014.
+
+\bibitem{arora12}
+Sanjeev Arora, Rong Ge, Ravindran Kannan, and Ankur Moitra.
+\newblock Computing a nonnegative matrix factorization -- provably.
+\newblock In {\em Proceedings of the Forty-fourth Annual ACM Symposium on
+  Theory of Computing}, STOC '12, pages 145--162, New York, NY, USA, 2012. ACM.
+
+\bibitem{balan06}
+Radu Balan, Pete Casazza, and Dan Edidin.
+\newblock On signal reconstruction without phase.
+\newblock {\em Applied and Computational Harmonic Analysis}, 20(3):345 -- 356,
+  2006.
+
+\bibitem{blanchard14}
+Gilles Blanchard and Clayton Scott.
+\newblock Decontamination of mutually contaminated models.
+\newblock In {\em Proceedings of the Seventeenth International Conference on
+  Artificial Intelligence and Statistics, {AISTATS} 2014, Reykjavik, Iceland,
+  April 22-25, 2014}, pages 1--9, 2014.
+
+\bibitem{bruni85}
+C.~Bruni and G.~Koch.
+\newblock Identifiability of continuous mixtures of unknown gaussian
+  distributions.
+\newblock {\em Ann. Probab.}, 13(4):1341--1357, 11 1985.
+
+\bibitem{symtensorrank}
+Pierre Comon, Gene Golub, Lek-Heng Lim, and Bernard Mourrain.
+\newblock Symmetric tensors and symmetric tensor rank.
+\newblock {\em SIAM Journal on Matrix Analysis and Applications},
+  30(3):1254--1279, 2008.
+
+\bibitem{donoho03}
+David~L. Donoho and Victoria Stodden.
+\newblock When does non-negative matrix factorization give a correct
+  decomposition into parts?
+\newblock In Sebastian Thrun, Lawrence~K. Saul, and Bernhard Schölkopf,
+  editors, {\em NIPS}. MIT Press, 2003.
+
+\bibitem{folland99}
+Gerald~B. Folland.
+\newblock {\em Real analysis: modern techniques and their applications}.
+\newblock Pure and applied mathematics. Wiley, 1999.
+
+\bibitem{kadison83}
+R.V. Kadison and J.R. Ringrose.
+\newblock {\em Fundamentals of the theory of operator algebras. V1: Elementary
+  theory}.
+\newblock Pure and Applied Mathematics. Elsevier Science, 1983.
+
+\bibitem{fomp}
+Olav Kallenberg.
+\newblock {\em Foundations of modern probability}.
+\newblock Probability and its applications. Springer, New York, Berlin,, Paris,
+  2002.
+\newblock Sur la 4e de couv. : This new edition contains four new chapters as
+  well as numerous improvements throughout the text.
+
+\bibitem{kruskal77}
+Joseph~B. Kruskal.
+\newblock Three-way arrays: rank and uniqueness of trilinear decompositions,
+  with application to arithmetic complexity and statistics.
+\newblock {\em Linear Algebra and its Applications}, 18(2):95 -- 138, 1977.
+
+\bibitem{micchelli06}
+Charles~A. Micchelli, Yuesheng Xu, Haizhang Zhang, and Gabor Lugosi.
+\newblock Universal kernels.
+\newblock {\em J. Machine Learning Research}, 7:2651--2667, 2006.
+
+\bibitem{pachter04}
+Lior Pachter and David~E Speyer.
+\newblock Reconstructing trees from subtree weights.
+\newblock {\em Applied Mathematics Letters}, 17:615--621, 2004.
+
+\bibitem{paz71}
+Azaria Paz.
+\newblock {\em Introduction to Probabilistic Automata (Computer Science and
+  Applied Mathematics)}.
+\newblock Academic Press, Inc., Orlando, FL, USA, 1971.
+
+\bibitem{rabani13}
+Yuval Rabani, Leonard~J. Schulman, and Chaitanya Swamy.
+\newblock Learning mixtures of arbitrary distributions over large discrete
+  domains.
+\newblock {\em ArXiv e-prints}, 2013.
+
+\bibitem{teicher63}
+Henry Teicher.
+\newblock Identifiability of finite mixtures.
+\newblock {\em Ann. Math. Statist.}, 34(4):1265--1269, 12 1963.
+
+\bibitem{introhilb}
+N.~Young.
+\newblock {\em An Introduction to Hilbert Space}.
+\newblock Cambridge mathematical textbooks. Cambridge University Press, 1988.
+
+\end{thebibliography}

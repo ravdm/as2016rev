@@ -1,0 +1,58 @@
+This is BibTeX, Version 0.99d (TeX Live 2015)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: ims-sample.aux
+The style file: plain.bst
+Database file #1: rvdm.bib
+""" immediately follows a field name---line 143 of file rvdm.bib
+ :  pages
+ :       "568-591"}
+I'm skipping whatever remains of this entry
+A bad cross reference---entry "blanchard14"
+refers to entry "DBLP:conf/aistats/2014", which doesn't exist
+A bad cross reference---entry "song14"
+refers to entry "DBLP:conf/icml/2014", which doesn't exist
+Warning--I didn't find a database entry for "DBLP:conf/aistats/2014"
+Warning--I didn't find a database entry for "DBLP:conf/icml/2014"
+Warning--empty journal in arxiv16
+You've used 24 entries,
+            2118 wiz_defined-function locations,
+            656 strings with 8233 characters,
+and the built_in function-call counts, 8571 in all, are:
+= -- 865
+> -- 372
+< -- 7
++ -- 146
+- -- 121
+* -- 587
+:= -- 1397
+add.period$ -- 78
+call.type$ -- 24
+change.case$ -- 125
+chr.to.int$ -- 0
+cite$ -- 25
+duplicate$ -- 336
+empty$ -- 682
+format.name$ -- 121
+if$ -- 1829
+int.to.chr$ -- 0
+int.to.str$ -- 24
+missing$ -- 27
+newline$ -- 123
+num.names$ -- 50
+pop$ -- 134
+preamble$ -- 1
+purify$ -- 107
+quote$ -- 0
+skip$ -- 243
+stack$ -- 0
+substring$ -- 592
+swap$ -- 81
+text.length$ -- 7
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 86
+warning$ -- 1
+while$ -- 83
+width$ -- 26
+write$ -- 271
+(There were 3 error messages)

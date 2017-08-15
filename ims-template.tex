@@ -1,0 +1,739 @@
+% Template for the submission to:
+%   The Annals of Probability           [aop]
+%   The Annals of Applied Probability   [aap]
+%   The Annals of Statistics            [aos] 
+%   The Annals of Applied Statistics    [aoas]
+%   Stochastic Systems                  [ssy]
+%
+%Author: In this template, the places where you need to add information
+%        (or delete line) are indicated by {???}.  Mostly the information
+%        required is obvious, but some explanations are given in lines starting
+%Author:
+%All other lines should be ignored.  After editing, there should be
+%no instances of ??? after this line.
+
+% use option [preprint] to remove info line at bottom
+% journal options: aop,aap,aos,aoas,ssy
+% natbib option: authoryear
+\documentclass[aos]{imsart}
+\DeclareMathAlphabet{\pazocal}{OMS}{zplm}{m}{n}
+\RequirePackage{amsthm,amsmath}
+\RequirePackage[OT1]{fontenc}
+\usepackage{mathrsfs,bbm,euscript,dsfont}
+\usepackage{wasysym,enumerate,amssymb}
+\usepackage{amsthm,natbib}
+\RequirePackage[colorlinks,citecolor=blue,urlcolor=blue]{hyperref}
+
+
+%%%*************HACK TO SUPPRESS HBOX ERRORS***** need to remove
+\hfuzz=12in
+%%%%%%%
+
+
+%\RequirePackage[colorlinks,citecolor=blue,urlcolor=blue]{hyperref}
+
+% provide arXiv number if available:
+%\arxiv{arXiv:0000.0000}
+
+% put your definitions there:
+\startlocaldefs
+\def\rn{\mathbb{R}}
+\def\cn{\mathbb{C}}
+\def\nn{\mathbb{N}}
+\def\dsig{{\mathcal{D}_\sigma}}
+\def\dsign{{\mathcal{D}_\sigma^n}}
+\def\ftiln{\widetilde{f}_\sigma^n}
+\def\fsign{f_\sigma^n}
+\def\l{\left}
+\def\r{\right}
+\def\fsigbar{\bar{f}_\sigma}
+\def\ftar{f_{tar}}
+\def\fobs{f_{obs}}
+\def\fcon{f_{con}}
+\def\dcon{\mathcal{D}_{con}}
+\def\dtar{\mathcal{D}_{tar}}
+\def\sF{\pazocal{F}}
+\def\sG{\pazocal{G}}
+\def\sM{\pazocal{M}}
+\def\sX{\pazocal{X}}
+\def\sD{\pazocal{D}}
+\def\sB{\pazocal{B}}
+\def\sV{\pazocal{V}}
+\def\sH{\pazocal{H}}
+\def\sP{\mathscr{P}}
+\def\sQ{\mathscr{Q}}
+\def\sL{\pazocal{L}}
+\def\bX{\mathbf{X}}
+\def\bt{\mathbf{t}}
+\def\bc{\mathbf{c}}
+\def\hs{\mathscr{HS}}
+\def\pr{\mathbb{P}}
+\def\bs{{\overset{\circ}{B}}}
+\def\d2{\sD_2}
+\def\dd{\Delta\left( \sD \right)}
+\def\ind{\mathbbm{1}}
+\def\span{\operatorname{span}}
+\def\simiid{\overset{iid}{\sim}}
+\def\span{\operatorname{span}}
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lem}{Lemma}[section]
+\theoremstyle{defintion}
+\newtheorem{defin}{Definition}[section]
+\endlocaldefs
+\begin{document}
+
+\begin{frontmatter}
+\title{A Sample Document}
+\runtitle{A Sample Document}
+
+\begin{aug}
+\author{\fnms{Robert} \snm{Vandermeulen}\thanksref{m1}\ead[label=e1]{rvdm@umich.edu}}
+\and
+\author{\fnms{Clayton} \snm{Scott}\thanksref{m2}
+\ead[label=e2]{clayscot@umich.edu}}
+
+\runauthor{Vandermeulen and Scott}
+
+\affiliation{University of Michigan: Electrical and Computer Engineering\thanksmark{m1}\thanksmark{m2}and Statistics\thanksmark{m2}}
+
+\address{EECS Building\\
+1301 Beal Avenue\\
+Ann Arbor MI, 48105\\
+\printead{e1}\\
+\phantom{E-mail:\ }\printead*{e2}}
+\end{aug}
+
+\begin{abstract}
+The abstract should summarize the contents of the paper.
+It should be clear, descriptive, self-explanatory and not longer
+than 200 words. It should also be suitable for publication in
+abstracting services. Please avoid using math formulas as much as possible.
+
+This is a sample input file.  Comparing it with the output it
+generates can show you how to produce a simple document of
+your own.
+\end{abstract}
+
+\begin{keyword}[class=MSC]
+\kwd[Primary ]{60K35}
+\kwd{60K35}
+\kwd[; secondary ]{60K35}
+\end{keyword}
+
+\begin{keyword}
+\kwd{sample}
+\kwd{\LaTeXe}
+\end{keyword}
+
+\end{frontmatter}
+
+\section{Introduction}
+A finite mixture model $\sP$ is a probability measure over a space of probability measures where $\sP\left( \left\{ \mu_i \right\} \right)=w_i >0$ for some finite collection of probability measures $\mu_1,\ldots,\mu_m$ with $\sum_{i=1}^m w_i = 1$. A realization from this mixture model first randomly selects some mixture component $\mu \sim \sP$ and then draws from $\mu$. Mixture models have seen extensive use in statistics and machine learning.
+
+A central theoretical question concerning mixture models is that of identifiability. A mixture model is said to be {\em identifiable} if there is no other mixture model which defines the same distribution over the observed data. Classically mixture models were concerned with the case where the observed data $X_1,X_2,\ldots$ are iid with $X_i$ distributed according to some unobserved random measure $\mu_i$ with $\mu_i\simiid \sP$. This situation is equivalent to $X_i \simiid \sum_{j=1}^m w_j \mu_j$. If we impose no restrictions on the mixture components $\mu_1,\ldots,\mu_m$ one could easily concoct many choices of $\mu_j$ and $w_j$ which yield an identical distribution on $X_i$. As a consequence most previous work on identifiability assumes some sort of structure on $\mu_1,\ldots,\mu_m$, such as Gaussianity \cite{anderson14,bruni85}. In this work we consider an alternative scenario where we make no assumptions on $\mu_1,\ldots,\mu_m$ and instead have access to groups of samples which are known to come from the same component. We will call these groups of samples ``random groups.'' Mathematically a random group is a random element $\bX_i$ where $\bX_i = \left( X_{i,1},\ldots,X_{i,n} \right)$ with $X_{i,1},\ldots,X_{i,n}\simiid \mu_i$ and $\mu_i \simiid \sP$.
+
+In this setting identifiability is now concerned with the distribution over $\bX_i$ and the value of $n$, the number of samples in each random group. We call a mixture of measures $\sP$ $n$-identifiable if it is the simplest mixture model (in terms of number of mixture components) which yields the observed distribution on $\bX_i$. We also introduce a new concept which is stronger than identifiability. We call $\sP$ $n$-determined if it is the {\em only} mixture model which yields the observed distribution on $\bX_i$. In this paper we show that a mixture model with $m$ components is always $\left(2m-1\r)$-identifiable and $2m$-determined. Furthermore we show that any mixture model with linearly independent components is $3$-identifiable and a mixture model with jointly irreducible components is $2$-identifiable. These results hold for any mixture model over any space and cannot be improved.
+	\section{Previous Work}
+	In classical mixture model theory identifiability is achieved by making assumptions about the mixture components. Some assumptions which yield identifiability are Gaussian or binomial mixture components \cite{bruni85,teicher63}. If one makes no assumptions on the mixture components then one must leverage some other type of structure in order to achieve identifiability. An example of such structure exists in the context of multiview models. In a multiview model samples have the form $\bX_i = \left( X_{i,1},\ldots, X_{i,n} \right)$ and the distribution of $\bX_i$ is defined by $\sum_{i=1}^m w_i \prod_{j=1}^n \mu_i^j$. In \cite{allman09} it was shown that if $\mu_i^j$ are probability distributions on $\rn$ with $\mu_1^j,\ldots,\mu_m^j$ linearly independent for all $j$ and $n\ge 3$, then the model is identifiable.
+
+	The setting which we investigate is a special case of the multiview model where $\mu_i^j = \mu_i^{j'}$ for all $i,j,j'$. If the sample space of the $\mu_i$ is finite then this problem is exactly the topic modelling problem with a finite number of topics and one topic for each document. In topic modelling each $\mu_i$ is a ``topic'', and the sample space is a finite collection of words. This setting is well studied and it has been shown that one can recover the true topics provided certain assumptions on the topics \cite{allman09, anandkumar14, arora12}. This problem was studied for arbitrary topics in \cite{rabani13}. In this paper the authors introduce an algorithm that recovers any mixture of $m$ topics provided $2m-1$ words per document. They also show, in a result analogous to our own, that this $2m-1$ value cannot be improved. Our proof techniques are quite different than those used in \cite{rabani13}, hold for arbitrary sample spaces, and are less complex.
+	\section{Problem Setup} 
+	We will be treating this problem in as general of a setting as possible. For any measurable space we define $\delta_x$ as the Dirac measure at $x$. For $\smiley$ a set, $\sigma$-algebra, or measure, we denote $\smiley^{\times a}$ to be the standard $a$-fold product associated with that object. For any natural number $k$ we define $\left[ k \right] \triangleq \mathbb{N} \cap \left[ 1,k \right]$.
+	Let $\Omega$ be a set containing more than one element. This set is the sample space of our data. Let $\sF$ be a $\sigma$-algebra over $\Omega$. Assume $\sF \neq \left\{ \emptyset, \Omega \right\}$. We denote the space of probability measures over this space as $\sD\left( \Omega,\sF \right)$, which we will shorten to $\sD$. We will equip $\sD$ with the $\sigma$-algebra $2^\sD$ so that each Dirac measure over $\sD$ is unique. Define $\dd \triangleq \span \left( \delta_x: x \in \sD \right)$. This is the ambient space where our mixtures of probability measures live. Let $\sP = \sum_{i=1}^m  w_i \delta_{\mu_i}$ be a probability measure in $\dd$. Let $\mu\sim \sP$ and $X_1 ,\ldots, X_n \simiid \mu$. Here $\bX$ is a random group sample, which was described in the introduction. We will denote $\bX = \left( X_1,\ldots,X_n \right)$.
+
+	We will now derive the probability law of $\bX$. Let $A\in \sF^{\times n}$. We have
+	\begin{eqnarray*}
+		\pr\left(\bX \in A \right)
+		&=& \sum_{i=1}^m \pr\left( \bX \in A \right|\mu=\mu_i) \pr\left( \mu=\mu_i \right)\\
+	 &=&  \sum_{i=1}^m w_i \mu_i^{\times n}\left( A \right).
+	\end{eqnarray*}
+	The second equality follows from Lemma 3.10 in \cite{fomp}.
+	So the probability law of $\bX$ is 
+	\begin{eqnarray}
+		\label{xdens}
+		\sum_{i=1}^m w_i \mu_i^{\times n}. 
+	\end{eqnarray}
+	We want to view the probability law of $\bX$ as a function of $\sP$ in a mathematically rigorous way, which requires a bit of technical buildup.
+	Let $\sV$ be a vector space. We will now construct a version of the integral for $\sV$-valued functions over $\sD$. Let $\sQ\in \dd$. From the definition of $\dd$ it follows that $\sQ$ admits the representation $$\sQ = \sum_{i=1}^r \alpha_i\delta_{\nu_i} .$$
+	From the well-ordering principle there must exist some representation with minimal $r$ and we define this $r$ as the {\it order} of $\sQ$. We can show that the representation of any $\sQ \in \dd$ is unique up to permutation of its indices.
+
+	\begin{lem} \label{lem:represent}
+		Let $\sQ\in \dd$ and admit minimal representations $\sQ = \sum_{i=1}^r  \alpha_i \delta_{\nu_i}= \sum_{i=1}^r \alpha_i'\delta_{\nu_i'}$. There exists some permutation $\psi:\left[ r \right] \to \left[ r \right]$ such that $\nu_{\psi\left( i \right)} = \nu'_i$ and $\alpha_{\psi\left( i \right)} = \alpha'_i$ for all $i$.
+	\end{lem}
+
+	Henceforth when we define an element of $\dd$ with a summation we will assume that the summation is a minimal representation.
+	\begin{defin} \label{def:mixmeasure}
+		We call $\sP$ a {\em mixture of measures} if it is a probability measure in $\dd$. We will say that $\sP$ has $m$ {\em mixture components} if it has order $m$.
+	\end{defin}
+
+	Any minimal representation of a mixture of measures $\sP$ with $m$ components satisfies $\sP=\sum_{i=1}^m w_i \delta_{\mu_i}$ with $w_i>0$ for all $i$ and $\sum_{i=1}^m w_i = 1$. So any mixture of measures is a convex combination of Dirac measures at elements in $\sD$.
+
+
+	For a function $f:\sD \to \sV$ define
+	\begin{eqnarray*}
+		\int f(\nu) d\sQ(\nu) = \sum_{i=1}^r \alpha_i f\left( \nu_i \right),
+	\end{eqnarray*}
+	where $\sum_{i=1}^r  \alpha_i\delta_{\nu_i}$ is a minimal representation of $\sQ$. This integral is well defined as a consequence of Lemma \ref{lem:represent}.
+
+	For a measurable space $\left(\Psi, \sG \right)$ we define $\sM \left(\Psi, \sG \right)$ as the space of all finite signed measures over $\left(\Psi, \sG \right)$. Let $\lambda_n:\sM\left( \Omega, \sF \right) \to \sM\left( \Omega^{\times n}, \sF^{\times n}\right);\nu \mapsto \nu^{\times n}$. We introduce the operator $V_n:\dd\to \sM\left( \Omega^{\times n}, \sF^{\times n} \right)$
+	\begin{eqnarray*}
+		V_n(\sQ) = \int \lambda_n(\nu) d\sQ\left( \nu \right)= \int \nu^{\times n} d\sQ\left( \nu \right).
+	\end{eqnarray*}
+	For a minimal representation $\sQ =\sum_{i=1}^r  \alpha_i\delta_{\nu_i}$, we have
+	\begin{eqnarray*}
+		V_n(\sQ) =\sum_{i=1}^r  \alpha_i\nu_i^{\times n}.
+	\end{eqnarray*}
+
+	From this definition we have that $V_n\left( \sP \right)$ is simply the law of $\bX$ which we derived earlier. For sake of explicitness we mention that a pair of mixtures of measures are equal iff they are the same measure.
+
+	\begin{defin}\label{def:ident}
+		We call a mixture of measures, $\sP$, \emph{$n$-identifiable} if there does not exist a different mixture of measures $\sP'$, with order no greater than the order of $\sP$, such that $V_n\left( \sP \right) = V_n\left( \sP' \right)$.
+	\end{defin}
+	\begin{defin}\label{def:det}
+		We call a mixture of measures, $\sP$, \emph{$n$-determined} if there exists no other mixture of measures $\sP'$ such that $V_n\left( \sP \right) = V_n\left( \sP' \right)$. 
+	\end{defin}
+
+	Definition \ref{def:ident} and \ref{def:det} are the central objects of interest in this paper. Given a mixture of measures, $\sP = \sum_{i=1}^m w_i\delta_{\mu_i}$ then $V_n(\sP)$ is equal to $\sum_{i=1}^m w_i \mu_i^{\times n}$, the measure from which $\bX$ is drawn. If $\sP$ is not $n$-identifiable then we know that there exists a different mixture of measures which is no more complex (in terms of number of mixture components) than $\sP$ which is not discernible from $\sP$ given the data. Practically speaking this means we need more samples in each random group $\bX$ in order for the full richness of $\sP$ to be manifested in $\bX$. $n$-determination is analogous to $n$-identifiability, but with the requirement that our mixture of measures be the {\em only} mixture of measures (of any order) which admits the distribution over the data, not just the simplest.
+
+
+	\section{Results}
+	The first result is a bound on the $n$-identifiability of all mixtures of measures with $m$ or fewer components. This bound cannot be uniformly improved.
+	\begin{thm} \label{thm:ident}
+		Let $\left( \Omega,\sF \right)$ be a measurable space. Mixtures of measures with $m$ components are $(2m-1)$-identifiable.
+	\end{thm}
+
+	\begin{thm} \label{thm:noident}
+		Let $\left( \Omega, \sF \right)$ be a measurable space with $\sF \neq \left\{ \emptyset,\Omega \right\}$. For all $m$, there exists a mixture of measures with $m$ components which is not $(2m-2)$-identifiable.
+	\end{thm}
+	The following lemmas convey the unsurprising fact that $n$-identifiability is, in some sense, monotonic.
+	\begin{lem}\label{lem:ident}
+		If a mixture of measures is $n$-identifiable then it is $q$-identifiable for all $q>n$.
+	\end{lem}
+	\begin{lem} \label{lem:noident}
+		If a mixture of measures is not $n$-identifiable then it is not $q$-identifiable for any $q<n$.
+	\end{lem}
+	Viewed alternatively these results say that $n=2m-1$ is the smallest value for which $V_{n}$ is injective over the set of mixtures of measures with $m$ or fewer components.
+
+	We also present an analogous bound for $n$-determined-ness. This bound also cannot be improved.
+	\begin{thm}\label{thm:det}
+		Let $\left( \Omega,\sF \right)$ be a measurable space. Mixtures of measures with $m$ components are $2m$-determined.
+	\end{thm}
+
+	\begin{thm} \label{thm:nodet}
+		Let $\left( \Omega, \sF \right)$ be a measurable space with $\sF \neq \left\{ \emptyset,\Omega \right\}$. For all $m$, there exists a mixture of measures with $m$ components which is not $(2m-1)$-determined.
+	\end{thm}
+
+	Again $n$-determined-ness is monotonic in the number of samples per group.
+
+	\begin{lem}\label{lem:det}
+		If a mixture of measures is $n$-determined then it is $q$-determined for all $q>n$. 
+	\end{lem}
+	\begin{lem} \label{lem:nodet}
+		If a mixture of measures is not $n$-determined then it is not $q$-determined for any $q<n$. 
+	\end{lem}
+	This colleciton of results can be interpreted in an alternative way. Consider some pair of mixtures of measures $\sP, \sP'$. If $n\ge2m$ and either mixture of measures is of order $m$ or less, then $V_n\left( \sP \right) = V_n\left( \sP' \right)$ implies $\sP = \sP'$. Furthermore $n=2m$ is the smallest value of $n$ for which the previous statement is true.
+
+	Finally we also include two results which are analogous to previously shown results for the discrete setting. We note that our proof techniques are markedly different than the previous proofs for the discrete case.
+	\begin{thm} \label{thm:li}
+		If $\sP = \sum_{i=1}^m  w_i\mu_i$ is a mixture of measures where $\mu_1,\ldots,\mu_m$ are linearly independent then $\sP$ is $3$-determined.
+	\end{thm}
+	This bound is tight as a consequence of Theorem \ref{thm:noident} with $m=2$.
+
+	The discrete version of this theorem was first proven in \cite{allman09} by making use of Kruskal's Theorem \cite{kruskal77}. Kruskal's Theorem demonstrates that order 3 tensors over $\rn^d$ admit unique decompositions (up to scaling and permutation) given certain linear independence assumptions. Our proof makes no use of Kruskal's Theorem and demonstrates that $n$-identifiability for linearly independent mixture components need not be attached to the discrete version in any way. Furthermore Krushkal's theorem only implies the identifiability of the mixture components, not determined-ness. Though it is not an identifiability result, \cite{anandkumar14} contains an efficient algorithm for recovering linearly independent mixture components for discrete sample spaces so long as there are 3 samples in each random group.
+
+	Our final result is related to the ``separability condition'' found in \cite{donoho03}. The separability condition in the discrete case requires that, for each mixture component $\mu_i$, there exists $B_i\in \sF$ such that $\mu_i\left( B_i \right)>0$ and $\mu_j\left( B_i \right) = 0$ for all $i\neq j$. There exists a generalization of the separability condition, known as {\em joint irreducibility}.
+	\begin{defin}
+		A collection of probability measures $\mu_1,\ldots,\mu_m$ are said to be {\em jointly irreducible} if $\sum_{i=1}^{m} w_i \mu_i$ being a probability measure implies $w_i\ge0$. 
+	\end{defin}
+	In other words, any probability measure in the span of $\mu_1,\ldots,\mu_m$ must be a convex combination of those measures. It was shown in \cite{blanchard14} that separability implies joint irreducibility, but not visa-versa. In that paper it was also shown that joint irreducibility implies linear independence, but the converse does not hold. 
+	\begin{thm} \label{thm:ji}
+		If $\sP= \sum_{i=1}^m w_i \mu_i $ is a mixture of measures where $\mu_1,\ldots, \mu_m$ are jointly irreducible then $\sP$ is $2$-determined.
+	\end{thm}
+
+	A straightforward consequence of \cite{arora12} is that the previous theorem holds for a discrete setting. In that setting joint irriducibility implies the separability condition. Because joint separability is more general one could not arrive at the previous theorem by applying a simple binning argument to the discrete version of our result. Again the determined-ness of the result is, as far as we know, totally new.
+	
+	\section{Tensor Products of Hilbert Spaces}
+	Our proofs will rely heavily on the geometry of tensor products of Hilbert spaces which we will introduce in this section.
+
+	\subsection{Overview of Tensor Products}
+	First we introduce tensor products of Hilbert spaces. To our knowledge there does not exist a rigorous construction of the tensor product Hilbert space which is both succinct and intuitive. Because of this we will simply state some basic facts about tensor products of Hilbert spaces and hopefully instill some intuition for the uninitiated by way of example. A thorough treatment of tensor products of Hilbert spaces can be found in \cite{kadison83}.
+
+	Let $H$ and $H'$ be Hilbert spaces. From these two Hilbert spaces the ``simple tensors'' are elements of the form $h\otimes h'$ with $h\in H$ and $h' \in H'$. We can treat the simple tensors as being the basis for some inner product space $H_0$, with the inner product of simple tensors satisfying
+	\begin{eqnarray*}
+		\l<h_1 \otimes h_1', h_2 \otimes h_2'\r> = \l<h_1,h_2\r>\l<h_1',h_2'\r>.
+	\end{eqnarray*}
+	The tensor product of $H$ and $H'$ is the completion of $H_0$ and is denoted $H\otimes H'$. To avoid potential confusion we note that the notation just described is standard in operator theory literature. In some literature our definition of $H_0$ is denoted as $H\otimes H'$ and our definition of $H \otimes H'$ is denoted $H \widehat{\otimes} H'$.
+
+	As an illustrative example we consider the tensor product $L^2\left( \rn \right) \otimes L^2\left( \rn \right)$. It can be shown that there exists an isomorphism between $L^2\left( \rn \right) \otimes L^2\left( \rn \right)$ and $L^2(\rn^2)$ which maps the simple tensors to separable functions \cite{kadison83}, $f \otimes f' \mapsto f(\cdot)f'(\cdot)$. We can demonstrate this isomorphism with a simple example. Let $f,g,f',g'\in L^2\left( \rn \right)$. Taking the $L^2(\rn^2)$ inner product of $f(\cdot)f'(\cdot)$ and $g(\cdot)g'(\cdot)$ gives us 
+
+	\begin{eqnarray*}
+		\int\int \l(f(x)f'(y)\r)\l(g(x)g'(y\r)) dx dy 
+		&=& \int f(x)g(x) dx \int f'(y)g'(y) dy\\
+	 &=& \l<f,g\r>  \l<f',g'\r>\\
+	 &=& \l<f\otimes f', g \otimes g'\r>.
+	\end{eqnarray*}
+
+	Beyond tensor product we will need to define tensor power. To begin we will first show that tensor products are, in some sense, associative. Let $H_1, H_2, H_3$ be Hilbert spaces. Proposition 2.6.5 in \cite{kadison83} states that there is a unique unitary operator, $U: (H_1 \otimes H_2)\otimes H_3 \to H_1 \otimes (H_2 \otimes H_3)$, which satisfies the following for all $h_1 \in H_1, h_2 \in H_2, h_3 \in H_3$,
+	\begin{eqnarray*}
+		U\left( \left( h_1 \otimes h_2 \right)\otimes h_3 \right) = h_1 \otimes \left( h_2 \otimes h_3 \right).
+	\end{eqnarray*}
+	This implies that for any collection of Hilbert spaces, $H_1,\ldots , H_n$, the Hilbert space $H_1 \otimes \cdots \otimes H_n$ is defined unambiguously regardless of how we decide to associate the products. In the space $H_1 \otimes \cdots \otimes H_n$ we define a simple tensor as a vector of the form $h_1 \otimes\cdots\otimes h_n$ with $h_i \in H_i$. In \cite{kadison83} it is shown that $H_1 \otimes\cdots \otimes H_n$ is the closure of the span of these simple tensors. To conclude this primer on tensor products we introduce the following notation. For a Hilbert space $H$ we denote $H^{\otimes n}= \underbrace{H\otimes H \otimes \dots \otimes H}_\text{n times}$ and for $h \in H$, $h^{\otimes n}= \underbrace{h\otimes h \otimes \dots \otimes h}_\text{n times}$.
+	\subsection{Tensor Rank}
+	A tool we will use frequently in our proofs is {\em tensor rank}, which behave similarly to matrix rank.
+	\begin{defin} \label{def:tensrank}
+		Let $h\in H^{\otimes n}$ where $H$ is a Hilbert space. The {\em rank} of $h$ is the smallest natural number $r$ such that $h =\sum_{i=1}^r h_i$ where $h_i$ are simple tensors.
+	\end{defin}
+
+	\subsection{Some Results for Tensor Product Spaces}
+	We derive some technical results concerning tensor product spaces which will be useful for the rest of the paper. These lemmas are similar to or  are straightforward extensions of previous results which we needed to modify for our particular purposes. Let $\left( \Psi, \sG, \gamma \right)$ be a $\sigma$-finite measure space. We have the following lemma which connects tensor power of a $L^2$ space to the $L^2$ space of the product measure. The proofs of this lemma and the next one are straightforward but technical, and can be found in the appendix. 
+	\begin{lem}
+		\label{lem:l2prod}
+		There exists a unitary transform $U:L^2\left( \Psi, \sG, \gamma \right)^{\otimes n} \to L^2\left( \Psi^{\times n}, \sG^{\times n}, \gamma^{\times n} \right)$ such that, for all $f_1,\ldots, f_n \in L^2\left( \Psi, \sG, \gamma \right)$, $U\left( f_1\otimes \cdots \otimes f_n \right) = f_1(\cdot)\cdots f_n(\cdot)$.
+	\end{lem}
+	The following lemma is used in the proof of Lemma \ref{lem:l2prod} as well as the proof of Theorem \ref{thm:noident}.
+	\begin{lem} \label{lem:unitprod}
+		Let $H_1,\ldots, H_n, H_1',\ldots, H_n'$ be a collection of Hilbert spaces and $U_1,\ldots,U_n$ a collection of unitary operators with $U_i:H_i \to H_i'$ for all $i$. There exists a unitary operator $U:H_1 \otimes \cdots \otimes H_n \to H_1' \otimes \cdots \otimes H_n'$ satisfying $U\left( h_1 \otimes\cdots \otimes h_n \right) = U_1(h_1) \otimes \cdots \otimes U_n(h_n)$ for all $h_1 \in H_1 ,\ldots, h_n \in H_n$.
+	\end{lem}
+	A statement of the following lemma for $\rn^d$ can be found in \cite{symtensorrank}. We present our own proof for the Hilbert space setting.
+	\begin{lem}\label{lem:linind}
+		Let $n>1$ and let $h_1,\ldots, h_n$ be elements of a Hilbert space such that no elements are zero and no pairs of elements are collinear. Then $h_1^{\otimes n-1},\ldots, h_n^{\otimes n-1}$ are linearly independent.
+	\end{lem}
+	The following lemma is a Hilbert space version of a well known property for positive semi-definite matrices.
+	\begin{lem} \label{lem:tensrank}
+		Let $h_1,\ldots,h_m$ be elements of a Hilbert space. The rank of $\sum_{i=1}^m h_i^{\otimes 2}$ is the dimension of $\span\left( h_1,\ldots,h_m \right)$.
+	\end{lem}
+
+	\section{Proofs of Theorems}
+	With the tools developed in the previous sections we can now prove our theorems. First we introduce one additional piece of notation. For a function $f$ on a domain $\sX$ we define $f^{\times k}$ as simply the product of the function $k$ times on the domain $\sX^{\times k}$, $\underbrace{f(\cdot)\cdots f(\cdot)}_{\text{k times}}$. For a measure the notation continues to denote the standard product measure.
+
+	In these proofs we will be making extensive use of various $L^2$ spaces. These spaces will be equivalence classes of funcitons which are almost everywhere equal with respect to the measure associated with that space. When considering elements of these spaces, equality will always mean almost everywhere equality with repsect to the measure associated with that space. When performing integrals or other manipulations of elements in $L^2$ spaces, we will be performing operations which do not depend on the representative of that equivalence class.
+	\begin{proof}[Proof of Theorem \ref{thm:ident}]
+		We will proceed by contradiction. Suppose there exist two different mixtures of measures $\sP = \sum_{i=1}^m a_i\delta_{\mu_i}  \neq \sP' = \sum_{j=1}^l b_j\delta_{\nu_j}$, such that
+		\begin{eqnarray} 
+			\sum_{i=1}^{m} a_i {\mu_i}^{\times 2m-1} = \sum_{j=1}^{l} b_j {\nu}_j^{\times 2m-1} \label{grr}
+		\end{eqnarray}
+		and $l\le m$. From our assumption on representation we know $\mu_i \neq \mu_j$ and $\nu_i \neq \nu_j$ for all $i\neq j$. We will also assume that $\mu_i \neq \nu_j$ for all $i,j$. Were this not true we could simply subtract the smaller of the common terms from both sides of (\ref{grr}) and normalize to yield another pair of distinct mixtures of measures with fewer components and no shared terms, $\sQ$ and $\sQ'$. Let $\sQ$ have $m'$ components and $\sQ'$ have $l'$ with $m'\ge l'$. If $m\neq m'$ then we can apply Lemma \ref{lem:noident} to give us $V_{2m'-1}\left( \sQ \right)= V_{2m'-1}\left( \sQ' \right)$ and proceed as usual. We will use the following lemma to embed the mixture components in a Hilbert space.
+		\begin{lem} \label{lem:himbed}
+			Let $\gamma_1,\ldots,\gamma_n$ be finite measures on a $\sigma$-algebra $\left( \Psi, \sG \right)$. There exists a finite measure $\pi$ and non-negative functions $f_1,\ldots,f_n \in  L^1\left( \Psi,\sG,\pi \right)\cap L^2\left( \Psi,\sG,\pi \right)$ such that, for all $i$ and all $B \in \sG$
+			\begin{eqnarray*}
+				\gamma_i(B)=\int_B f_i d\pi. 
+			\end{eqnarray*}
+		\end{lem}
+		From Lemma \ref{lem:himbed} there exists a finite measures $\xi$ and non-negative functions $p_1,\ldots,p_m,q_1,\ldots,q_l \in L^1\left( \Omega, \sF, \xi \right)\cap L^2\left( \Omega, \sF, \xi \right)$ such that, for all $B\in \sF$, $\mu_i(B) = \int_B p_i d\xi$ and $\nu_j(B) = \int_B q_j d\xi$ for all $i,j$. Clearly no two of these derivatives are equal. If one of the derivatives were a scalar multiple of another, for example $p_1 = \alpha p_2$ for some $\alpha \neq 1$, it would imply
+		\begin{eqnarray*}
+			\mu_1\left( \Omega \right) = \int p_1 d\xi = \int \alpha p_2 d\xi=\alpha.
+		\end{eqnarray*}
+		This is not true so no pair of these derivatives are collinear.
+
+		We can use the following lemma to extend this new representation to a product measure.
+
+		\begin{lem} \label{lem:radprod}
+			Let $\left( \Psi, \sG \right)$ be a measurable space, $\gamma$ and $\pi$ a pair of finite measures on that space, and $f$ a nonnegative function in $L^1\left(\Psi,\sG, \pi \right)$ such that, for all $A \in \sG$, $\gamma\left( A \right)=\int_A f d\pi$. Then for all $n$, for all $B \in \sG^{\times n}$ we have
+			\begin{eqnarray*}
+				\gamma^{\times n}\left( B \right) = \int_B f^{\times n} d\pi^{\times n}.
+			\end{eqnarray*}
+		\end{lem}
+		Thus for any $R \in \sF^{\times 2m-1}$  we have
+		\begin{eqnarray*}
+			\int_R \sum_{i=1}^{m} a_i p_i^{\times 2m-1} d\xi^{\times 2m-1} 
+			&=&  \sum_{i=1}^{m} a_i \mu_i^{\times 2m-1}\left( R \right)\\
+		 &=&  \sum_{j=1}^{l} b_j \nu_j^{\times 2m-1}\left( R \right)\\
+		 &=& \int_R \sum_{j=1}^{l} b_j q_j^{\times 2m-1}d\xi^{\times 2m-1}.
+		\end{eqnarray*}
+		The following lemma is simply Proposition 2.23 in \cite{folland99}, but it is worth mentioning explicitly.
+		\begin{lem} \label{lem:inteq}
+			Let $\left( \Psi,\sG,\gamma \right)$ be a measure space and $f,g \in L^1\left( \Psi,\sG,\gamma \right)$. Then $f=g$ $\gamma$-almost everywhere iff, for all $A\in \sG$, $\int_A f d\gamma = \int_A g d\gamma$.
+		\end{lem}
+		From this lemma it follows that
+		\begin{eqnarray*}
+			\sum_{i=1}^{m} a_i p_i^{\times 2m-1} = \sum_{j=1}^{l} b_j q_j^{\times 2m-1}.
+		\end{eqnarray*}
+		Applying the $U^{-1}$ operator from Lemma \ref{lem:l2prod} to the previous equation yields
+		\begin{eqnarray*}
+			\sum_{i=1}^{m} a_i p_i^{\otimes 2m-1} = \sum_{j=1}^{l} b_j q_j^{\otimes 2m-1}.
+		\end{eqnarray*}
+		Since $l+m \le2m$ Lemma \ref{lem:linind} states that $p_1^{\otimes 2m-1},\ldots,p_{m}^{\otimes 2m-1},q_1^{\otimes 2m-1},\ldots,q_{l}^{\otimes 2m-1}$ are all linearly independent and thus $a_i = 0$ and $b_j = 0$ for all $i,j$, a contradiction.
+	\end{proof}
+
+	\begin{proof}[Proof of Theorem \ref{thm:noident}]
+		To prove this theorem we will construct a pair of mixture of measures, $\sP \neq \sP'$ which both contain $m$ components and satisfy $V_{2m-2}\left( \sP \right) = V_{2m-2}\left( \sP' \right)$. From our definition of $\left( \Omega, \sF \right)$ we know there exists $F\in \sF$ such that $F, F^C$ are nonempty. Let $x\in F$ and $x' \in F^C$. It follows that $\delta_{x}$ and $\delta_{x'}$ are different probability measures on $\left( \Omega, \sF \right)$. The theorem follows from the next lemma.
+	\begin{lem}\label{lem:test}
+		Let $\left( \Psi,\sG\right)$ be a measurable space and $\gamma, \gamma'$ be distinct probability measures on that space. Let $\varepsilon_1,\ldots,\varepsilon_t$ be $t$ distinct values in $\left[ 0,1 \right]$, then 
+		\begin{eqnarray*}
+			\sum_{i=1}^l \beta_i \left( \varepsilon_i \gamma + \left( 1-\varepsilon_i \right)\gamma' \right)^{\times t-2} = \sum_{j=l+1}^t \beta_j \left( \varepsilon_j \gamma + \left( 1-\varepsilon_j \right)\gamma' \right)^{\times t-2}
+		\end{eqnarray*}
+		where $\beta_i > 0$ for all $i$, $\sum_{i=1}^l \beta_i = \sum_{j=l+1}^t \beta_j = 1$, and $l,t- l \ge \left\lfloor\frac{t}{2}\right\rfloor$. 
+	\end{lem}
+
+	Applying Lemma \ref{lem:test} to the measures $\delta_x$ and $\delta_{x'}$, with $t=2m$ we get and letting $\mu_i = \varepsilon_i \delta_x + \left( 1-\varepsilon \right)\delta_{x'}$, we get 
+	\begin{eqnarray*}
+		\sum_{i=1}^m \beta_i \mu_i^{\times 2m-2} = \sum_{j=m+1}^{2m} \beta_j \mu_j^{\times 2m-2}.
+	\end{eqnarray*}
+	If we let $\sP = \sum_{i=1}^m \beta_i \mu_i$ and $\sP' = \sum_{j=m+1}^{2m} \beta_j \mu_j$, we have that $V_{2m-2}\left( \sP \right)= V_{2m-2}\left( \sP' \right)$.
+	\end{proof}
+	We now prove Lemma \ref{lem:test}.
+
+	\begin{proof}[Proof of Lemma \ref{lem:test}]
+		From Lemma \ref{lem:himbed}, there exists a finite measure $\pi$ and non-negative functions $f,f' \in L^1\left( \Psi,\sG,\pi \right)\cap L^2\left( \Psi,\sG,\pi \right)$ such that, for all $A$, $\gamma\left( A \right) = \int_A f d\pi$ and $\gamma'\left( A \right) = \int_A f' d\pi$.
+
+		Let $H_2$ be the Hilbert space generated from the span of $f,f'$. Let $\left( f_i \right)_{i=1}^{t}$ be non-negative functions in $L^1(\Psi, \sG, \pi)\cap L^2(\Psi, \sG, \pi)$ with $f_i = \varepsilon_i f + \left( 1-\varepsilon_i \right)f'$. Clearly $f_i$ is a pdf over $\pi$ for all $i$ and there are no pairs in this collection which are collinear. Since $H_2$ is isomorphic to $\rn^2$ there exists a unitary operator $U:H_2 \to \rn^2$. From Lemma \ref{lem:unitprod} there exists a unitary operator $U_{t-2}:H_2^{\otimes t-2} \to {\rn^2}^{\otimes t-2}$ with $U_{t-2}\left( h_1 \otimes\cdots \otimes h_{t-2} \right) = U(h_1) \otimes \cdots \otimes U(h_{t-2})$. Because $U$ is unitary the set $U_{t-2}\left( \span\left( \left\{ h^{\otimes t-2}: h \in H_2 \right\} \right) \right)$ maps exactly to the set $\span\left( x^{\otimes t-2}:x \in \rn^2 \right)$.  An order $r$ tensor, $A_{i_1,\ldots,i_r}$, is {\it symmetric} if $A_{i_1,\ldots,i_r} = A_{\psi\left( i_1 \right),\ldots,\psi\left( i_r \right)}$for any $i_1,\ldots, i_r$ and permutation $\psi$. A consequence of Lemma 4.2 in \cite{symtensorrank} is that $\span\left( \l\{x^{\otimes t-2}:x \in \rn^2\r\} \right)\subset S^{ t-2}(\cn^2)$, the space of all symmetric order $t-2$ tensors over $\cn^2$.
+
+ From Proposition 3.4 in \cite{symtensorrank} it follows that the dimension of $S^{ t-2 }\left( \cn^2 \right)$ is $\left( \begin{array}{c} 2+ t-2-1 \\ t-2 \end{array} \right) = t-1$. From this we get that $\dim\left( \span\left( \left\{ h^{\otimes t-2}: h \in H_2 \right\} \right)\right)\le t-1$.
+
+		The bound on the dimension of $\span\left( \left\{ h^{\otimes t-2}: h \in H_2 \right\} \right)$ implies that $\left( f_i^{\otimes t-2} \right)_{i=1}^{t}$ are linearly dependent. Conversely Lemma \ref{lem:linind} implies that removing a single vector from $\left( f_i^{\otimes t-2} \right)_{i=1}^{t}$ yields a set of vectors which are linearly independent. It follows that there exists $\left( \alpha_i \right)_{i=1}^{t}$ with $\alpha_i \neq 0$ for all $i$ and
+		\begin{eqnarray*}
+			\sum_{i=1}^{t}\alpha_i f_i^{\otimes t-2} = 0.
+		\end{eqnarray*}
+
+		Without loss of generality we will assume that $\alpha_i<0$ for $i\in \left[ l \right]$ with $l\le \l\lfloor \frac{t}{2}\r\rfloor$. From this we have 
+		\begin{eqnarray}\label{foo}
+			\sum_{i=1}^{l}-\alpha_i f_i^{\otimes t-2}=\sum_{j=l+1}^{t}\alpha_j f_j^{\otimes t-2}.
+		\end{eqnarray}
+		From Lemma \ref{lem:l2prod} we have
+		\begin{eqnarray*}
+			\sum_{i=1}^{l}-\alpha_i f_i^{\times t-2}=\sum_{j=l+1}^{t}\alpha_j f_j^{\times t-2}
+		\end{eqnarray*}
+		and thus
+		\begin{eqnarray*}
+			\int \sum_{i=1}^{l}-\alpha_i f_i^{\times t-2} d\pi^{\times t-2 }&=&\int \sum_{j=l+1}^{t}\alpha_j f_j^{\times t-2}d\pi^{\times t-2 }\\
+			\Rightarrow \sum_{i=1}^{l}-\alpha_i &=&\sum_{j=l+1}^{t}\alpha_j.
+		\end{eqnarray*}
+		Let $r=\sum_{i=1}^{l}-\alpha_i$. We know $r >0$ so dividing both sides of (\ref{foo}) by $r$ gives us
+		\begin{eqnarray*}
+			\sum_{i=1}^{l}-\frac{\alpha_i}{r} f_i^{\otimes t-2}=\sum_{j=l+1}^{t}\frac{\alpha_j}{r} f_j^{\otimes t-2}
+		\end{eqnarray*}
+		where the left and the right side are convex combinations. Let $\left( \beta_i \right)_{i=1}^{t}$ positive numbers with $\beta_i = \frac{-\alpha_i}{r}$ for $i \in \left\{ 1,\ldots,l \right\}$ and $\beta_j = \frac{\alpha_j}{r}$ for $j\in \left\{ l+1,\ldots,t \right\}$. This gives us
+		\begin{eqnarray*}
+			\sum_{i=1}^{l}\beta_i f_i^{\otimes t-2}=\sum_{j=l+1}^{t}\beta_j f_j^{\otimes t-2}.
+		\end{eqnarray*}
+		If $t$ is divisble by two then we can do the following,
+		\begin{eqnarray*}
+			\sum_{i=1}^{l} \beta_i f_i^{\otimes \frac{t}{2}-1}\otimes f_i^{\otimes \frac{t}{2}-1}&=&\sum_{j=l+1}^{t}\beta_j f_j^{\otimes \frac{t}{2}-1}\otimes f_j^{\otimes \frac{t}{2}-1}.
+		\end{eqnarray*}
+		Consider the elements in the last inequality as order two tensors in $\left( {L^2\left( \Psi, \sG, \pi \right)}^{\otimes \frac{t}{2}-1} \right)\otimes \left( {L^2\left( \Psi, \sG, \pi \right)}^{ \otimes \frac{t}{2}-1} \right)$. From Lemma \ref{lem:linind} and Lemma \ref{lem:tensrank} we have that the RHS of the previous equation has rank at least $\frac{t}{2}$ and since $l\le \frac{t}{2}$ it follows that $l=\frac{t}{2}$.
+		If $t$ is not divisible by $2$ then we can apply Lemma \ref{lem:l2prod} and integrate out a term to get
+
+		\begin{eqnarray*}
+			\int_\Psi \sum_{i=1}^l \beta_i f_i^{\times t-3}f_i(x) d\pi(x) &=& \int_\Psi \sum_{j=l+1}^{t}\beta_j f_j^{\times t-3} f_j(y) d\pi(y)\\
+			\Rightarrow  \sum_{i=1}^l \beta_i f_i^{\times t-3} &=&  \sum_{j=l+1}^{t}\beta_j f_j^{\times t-3}.
+		\end{eqnarray*}
+		Applying Lemma \ref{lem:l2prod} again we get
+		\begin{eqnarray*}
+			\sum_{i=1}^l \beta_i f_i^{\otimes \frac{t-1}{2} -1 } \otimes f_i^{\otimes \frac{t-1}{2} -1 } = \sum_{j=l+1}^{t}\beta_j f_j^{\otimes \frac{t-1}{2} -1 } \otimes f_j^{\otimes \frac{t-1}{2} -1 }.
+		\end{eqnarray*}
+		From Lemma \ref{lem:linind} and Lemma \ref{lem:tensrank} we have that the RHS of the previous equation has rank at least $\frac{t-1}{2}$ and thus $l\ge \frac{t-1}{2}$. From this we have that $t-l,l\ge \l\lfloor \frac{t}{2}\r\rfloor$ whether $t$ be even or odd.
+		Applying Lemma \ref{lem:l2prod} we have 
+		\begin{eqnarray*}
+			\sum_{i=1}^l \beta_i f_i^{\times t-2} = \sum_{j=l+1}^{t}\beta_j f_j^{\times t-2}.
+		\end{eqnarray*}
+		From Lemma \ref{lem:radprod} we have,
+		\begin{eqnarray*}
+			\sum_{i=1}^l  \beta_i \left( \varepsilon_i \gamma + \left( 1-\varepsilon_i \right) \gamma' \right)^{\times t-2}   &=& \sum_{j=l+1}^{t} \beta_j \left( \varepsilon_j \gamma + \left( 1-\varepsilon_j \right) \gamma' \right)^{\times t-2}.
+		\end{eqnarray*}
+	\end{proof}
+
+	
+
+
+	\begin{proof}[Proof of Theorem \ref{thm:det}]
+		Let $\sP = \sum_{i=1}^m a_i \delta_{\mu_i}$ and $\sP' = \sum_{j=1}^{l}  b_j \delta_{\nu_j}$ be mixtures of measures such that $\sP' \neq \sP$. We will proceed by contradiction. Suppose that $\sum_{i=1}^m  a_i \mu_i^{\times 2m} = \sum_{j=1}^l b_j \nu_j^{\times 2m} $. From Theorem \ref{thm:ident} we know that $\sP$ is $2m-1$ identifiable and therefore $2m$-identifiable by Lemma \ref{lem:ident}. Because of this it follows that $l>m$. From Lemma \ref{lem:himbed} there exists a finite measure $\xi$ and non-negative functions $p_1,\ldots,p_m,q_1,\ldots,q_l \in L^1\left( \Omega, \sF, \xi \right)\cap L^2\left( \Omega, \sF, \xi \right)$ such that, for all $B\in \sF$, $\mu_i(B) = \int_B p_i d\xi$ and $\nu_j(B) = \int_B q_j d\xi$ for all $i,j$. Using Lemmas \ref{lem:radprod} and \ref{lem:inteq} we have
+		\begin{eqnarray*}
+			\sum_{i=1}^m a_i p_i^{\times 2m} = \sum_{j=1}^l b_j q_j^{\times 2m}.
+		\end{eqnarray*}
+		By Lemma \ref{lem:l2prod} we have
+		\begin{eqnarray*}
+			\sum_{i=1}^m a_i p_i^{\otimes 2m} = \sum_{j=1}^l b_j q_j^{\otimes 2m},
+		\end{eqnarray*}
+		and therefore
+		\begin{eqnarray*}
+			\sum_{i=1}^m a_i p_i^{\otimes m}\otimes p_i^{\otimes m} = \sum_{j=1}^l b_j q_j^{\otimes m}\otimes q_j^{\otimes m}.
+		\end{eqnarray*}
+		Consider the elements in the last inequality as order two tensors in $\left( {L^2\left( \Omega, \sF, \xi \right)}^{\otimes m} \right)\otimes \left( {L^2\left( \Omega, \sF, \xi \right)}^{ \otimes m} \right)$. Since no pair of vectors in $p_1,\ldots,p_m$ are collinear, from Lemma \ref{lem:linind} and Lemma \ref{lem:tensrank} we know that the LHS has rank $m$. On the other hand, no pair of vectors $q_1,\ldots,q_l$ are collinear either, so Lemma \ref{lem:linind} says that there are at least $m+1$ linearly independent elements in $\left\{q_i^{\otimes m}\right\}_{1=i}^l$ so by Lemma \ref{lem:tensrank} the RHS has rank $m+1$ a contradiction.
+	\end{proof}
+	\begin{proof}[Proof of Theorem \ref{thm:nodet}]
+	To prove this theorem we will construct a pair of mixture of measures, $\sP \neq \sP'$ which both contain $m$ components and satisfy $V_{2m-1}\left( \sP \right) = V_{2m-1}\left( \sP' \right)$. From our definition of $\left( \Omega, \sF \right)$ we know there exists $F\in \sF$ such that $F, F^C$ are nonempty. Let $x\in F$ and $x' \in F^C$. It follows that $\delta_{x}$ and $\delta_{x'}$ are different probability measures on $\left( \Omega, \sF \right)$.
+	Applying Lemma \ref{lem:test} to the measures $\delta_x$ and $\delta_{x'}$, with $t=2m+1$ we get and letting $\mu_i = \varepsilon_i \delta_x + \left( 1-\varepsilon \right)\delta_{x'}$, we get 
+	\begin{eqnarray*}
+		\sum_{i=1}^m \beta_i \mu_i^{\times 2m-1} = \sum_{j=m+1}^{2m} \beta_j \mu_j^{\times 2m-1}.
+	\end{eqnarray*}
+	If we let $\sP = \sum_{i=1}^m \beta_i \mu_i$ and $\sP' = \sum_{j=m+1}^{2m+1} \beta_j \mu_j$, we have that $V_{2m-1}\left( \sP \right)= V_{2m-1}\left( \sP' \right)$.
+\end{proof}
+
+	For the next theorem we will need to define Hilbert-Schmidt operators.
+	\begin{defin} \label{def:hs}
+		Let $H,H'$ be Hilbert spaces and $T\in \sL\left( H,H' \right)$. $T$ is called a {\em Hilbert-Schmidt operator} if $\sum_{x\in J} \l\|T\left( x \right)\r\|^2 < \infty$ for an orthonormal basis $J\subset H$. We denote the set of Hilbert-Schmidt operators in $\sL\left( H,H' \right)$ by $\hs\left( H,H' \right)$.
+	\end{defin}
+	This definition does not depend on the choice of orthonormal basis: the sum $\sum_{x\in J} \l\|T\left( x \right)\r\|^2 < \infty$ will always yeild the same value regardless of the choice of orthonormal basis $J$. The set of Hilbert-Schmidt operators is a subspace in the set of bounded linear operators.
+
+	\begin{proof}[Proof of Theorem \ref{thm:li}]
+		Let $\sP = \sum_{i=1}^m a_i \delta_{\mu_i}$ be a mixture of measures with linearly independent components. Let $\sP' = \sum_{j=1}^l  b_j \delta_{\nu_j}$ be a mixture of measures with $l\le m$ and $V_3(\sP) = V_3(\sP')$. From Lemma \ref{lem:himbed} there exists a finite measure $\xi$ and non-negative functions $p_1,\ldots,p_m,q_1,\ldots,q_l \in L^1\left( \Omega, \sF, \xi \right)\cap L^2\left( \Omega, \sF, \xi \right)$ such that, for all $B\in \sF$, $\int_B p_i d\xi = \mu_i(B)$ and $\int_B q_j d\xi = \nu_j$ for all $i,j$.
+		Let $A\in \sF^{\times 2}$ be arbitrary. We have 
+		\begin{eqnarray*}
+			\sum_{i=1}^m a_i \mu_i^{\times 3}\left( A\times \Omega \right)   &=& \sum_{j=1}^l b_j \nu_j^{\times 3}\left( A\times \Omega \right)\\
+			\Rightarrow \sum_{i=1}^m a_i \mu_i^{\times 2}\left( A \right)   &=& \sum_{j=1}^l b_j \nu_j^{\times 2}\left( A \right).
+		\end{eqnarray*}
+		Since $A$ was arbitrary this implies
+		\begin{eqnarray*}
+			\sum_{i=1}^m a_i \mu_i^{\times 2} &=& \sum_{j=1}^l b_j \nu_j^{\times 2}.
+		\end{eqnarray*}
+		From Lemma \ref{lem:inteq}  we have that
+		\begin{eqnarray*}
+			\sum_{i=1}^m a_i p_i^{\times 2}   &=& \sum_{j=1}^l b_j q_j^{\times 2}.
+		\end{eqnarray*}
+		From Lemma \ref{lem:l2prod} we have
+		\begin{eqnarray*}
+			\sum_{i=1}^m a_i p_i^{\otimes 2}   &=& \sum_{j=1}^l b_j q_j^{\otimes 2}.
+		\end{eqnarray*}
+		We will now show that $q_j\in \span\left( p_1,\ldots,p_m \right)$ for all $j$. Suppose that $q_t \notin \span\left( p_1,\ldots,p_m \right)$. Then there exists $z$ sucht that $z\perp p_1,\ldots ,p_m$ but $z \not \perp q_t$. Now we have 
+		\begin{eqnarray*}
+			\sum_{i=1}^m a_i p_i^{\otimes 2}   &=& \sum_{j=1}^l b_j q_j^{\otimes 2}\\
+			\Rightarrow \l<\sum_{i=1}^m a_i p_i\otimes p_i, z\otimes z\r>   &=& \l<\sum_{j=1}^l b_j q_j \otimes q_j,z\otimes z\r> \\
+			\Rightarrow \sum_{i=1}^m a_i \l< p_i \otimes p_i, z\otimes z\r>   &=& \sum_{j=1}^l b_j \l<  q_j\otimes q_j,z\otimes z\r> \\
+			\Rightarrow \sum_{i=1}^m a_i \l< p_i , z\r>^2   &=& \sum_{j=1}^l b_j \l<  q_j,z\r>^2.
+		\end{eqnarray*}
+		We know that the LHS of the last equation is zero but the RHS is not, a contradiction.
+
+		We will find the following well known property of tensor products to be useful for continuing the proof (\cite{kadison83} Proposition 2.6.9).
+		\begin{lem} \label{lem:hstens}
+			Let $H,H'$ be Hilbert. There exists a unitary operator $U:H\otimes H' \to \hs\left( H,H' \right)$, such that for any simple tensor $h\otimes h' \in H\otimes H'$, $U\left( h\otimes h' \right) = \l<h,\cdot\r> h'$.
+		\end{lem}
+		Because $p_1,\ldots,p_m$ are linearly independent we can do the following: for each $k \in \left[ m \right]$ let $z_k \in \span\left( p_1,\ldots,p_m \right)$ be such that $z_k \perp \left\{ p_i: i \neq k \right\}$ and $\l<z_k,p_k\r> =1$. Considering elements of $L^2\left( \Omega,\sF, \xi \right)^{\otimes 3}$ as $L^2\left( \Omega,\sF, \xi \right)^{\otimes 2} \otimes L^2\left( \Omega,\sF, \xi \right)$, from Lemma \ref{lem:hstens} we have 
+		\begin{eqnarray}\label{eqn:ranksum}
+			\notag \sum_{i=1}^m a_i p_i^{\otimes 2}\l<p_i,z_k\r>   &=& \sum_{j=1}^l b_j q_j^{\otimes 2} \l<q_j,z_k\r>\\
+			\Rightarrow a_k p_k^{\otimes 2}  &=& \sum_{j=1}^l b_j q_j^{\otimes 2} \l<q_j,z_k\r>.
+		\end{eqnarray}
+		The LHS of (\ref{eqn:ranksum}) is rank 1 and thus by Lemma \ref{lem:tensrank} the RHS must have only one nonzero summand, which we will index with $\varphi\l(k\r)$. So we have
+		\begin{eqnarray*}
+			a_k p_k^{\otimes 2} = b_{\varphi\left( k \right)} q_{\varphi\left( k \right)}^{\otimes 2} \l<q_{\varphi\left( k \right)},z_k\r>
+		\end{eqnarray*}
+		and from Lemma \ref{lem:radprod} we have
+		\begin{eqnarray}
+			\label{eqn:li} a_k \mu_k^{\times 2} &=& b_{\varphi\left( k \right)} \nu_{\varphi\left( k \right)}^{\times 2}\l<q_{\varphi\left( k \right)},z_k\r>.
+		\end{eqnarray}
+		Since $\mu_k^{\times 2}$ and $\nu_{\varphi\left( k \right)}^{\times 2}$ are both probability measures it follows that $\mu_k = \nu_{\varphi\left( k \right)}$. Since $\mu_i \neq \mu_j$ and $\nu_i \neq \nu_j$ for all $i\neq j$ we see that $\varphi$ must be bijection. We can assert without loss of generality that $\varphi(k) = k$ and $\mu_k = \nu_k$ for all $k$. It directly follows that $l\ge m$. It also follows that $l=m$. To see this, consider a hypothetical $q_{m+1}$. From our prevoius argument it follows that $q_{m+1}$ is perpindicular to $z_1,\ldots, z_m$, whihc implies that $q_{m+1}$ is not in the span of $p_1,\ldots,p_m$, a contradiction.
+		
+		Let $A \in \sF$ be arbitrary. Since $V_3\left( \sP \right) = V_3\left( \sP' \right)$ we have
+		\begin{eqnarray*}
+			\sum_{i=1}^m a_i \mu_i^{\times 3} &=& \sum_{j=1}^m b_j \mu_j^{\times 3}\\
+			\Rightarrow \sum_{i=1}^m a_i \mu_i^{\times 3}\left( \Omega \times \Omega \times A \right) &=& \sum_{j=1}^m b_j \mu_j^{\times 3}\left( \Omega \times \Omega \times A \right)\\
+			\Rightarrow 
+			\sum_{i=1}^m a_i \mu_i\left( A \right) &=& \sum_{j=1}^m b_j \mu_j\left( A \right)
+		\end{eqnarray*}
+and thus $\sum_{i=1}^m a_i \mu_i = \sum_{j=1}^m b_j \mu_j$. Since $\mu_1,\ldots,\mu_m$ are linearly independent we have that $a_i = b_i$ for all $i$ finally $\sP = \sP'$.
+	\end{proof}
+	\begin{proof}[Proof of Theorem \ref{thm:ji}]
+		Let $\sP = \sum_{i=1}^m a_i \delta_{\mu_i}$ be a mixture of measures with jointly irreducible components. Consider a mixture of measures $\sP' = \sum_{j=1}^l b_j\delta_{\nu_j}$ with $V_2(\sP)= V_2(\sP')$. From Lemma \ref{lem:himbed} there exists a finite measure $\xi$ and non-negative functions $p_1,\ldots,p_m,q_1,\ldots,q_l \in L^1\left( \Omega, \sF, \xi \right)\cap L^2\left( \Omega, \sF, \xi \right)$ such that, for all $B\in \sF$, $\int_B p_i d\xi = \mu_i(B)$ and $\int_B q_j d\xi = \nu_j$ for all $i,j$. From Lemma \ref{lem:radprod} we have
+		\begin{eqnarray*}
+			\sum_{i=1}^m  a_i p_i \times p_i = \sum_{j=1}^l  b_j q_j\times q_j.
+		\end{eqnarray*}
+		From Lemma \ref{lem:l2prod} we have
+		\begin{eqnarray}
+			\label{eqn:noident}
+			\sum_{i=1}^m  a_i p_i \otimes p_i = \sum_{j=1}^l  b_j q_j\otimes q_j.
+		\end{eqnarray}
+
+		Suppose for a moment that $\sP'$ contains a mixutre component which does not lie in $\span\left( \mu_1,\ldots,\mu_m \right)$. Without loss of generality we will assume that $\nu_1 \notin \span\left( \mu_1,\ldots,\mu_m \right)$. It follows that $\nu_1,\mu_1,\ldots,\mu_m$ are a linearly independent set of vectors and thus $q_1,p_1,\ldots,p_m$ are linearly independent. It follows that we can find some $z$ such that $\l<z,q_1\r> \neq 0$ and $z\perp \mu_i$ for all $i$. From (\ref{eqn:noident}) this we have the following
+		\begin{eqnarray*}
+			\l<\sum_{i=1}^m  a_i p_i \otimes p_i,z\otimes z\r> &=& \l<\sum_{j=1}^l  b_j q_j\otimes q_j,z\otimes z\r>\\
+			\Rightarrow \sum_{i=1}^m a_i\l<   p_i \otimes p_i,z\otimes z\r> &=& \sum_{j=1}^l b_j\l<   q_j\otimes q_j,z\otimes z\r>\\
+			\Rightarrow \sum_{i=1}^m a_i\l<   p_i ,z\r>^2 &=& \sum_{j=1}^l b_j\l<   q_j,z\r>^2.
+		\end{eqnarray*}
+		All the summands on both sides of the last equation are nonnegative. By our construction of $z$ the LHS of the previous equation is zero and the first summand on the RHS is nonnegative, a contradiction. Thus, each component in $\sP'$ must lie in the span of the components of $\sP$.
+		
+		Now we have, for all $j$, $q_j = \sum_{i=1}^m c_i^j p_i$. From joint irriducibility we have that $c_i^j \ge 0$ for all $i$ and $j$. Now suppose that there exists $r,s,s'$ such that $c_s^r,c_{s'}^r >0$. From the linear independence of $p_1,\ldots,p_m$ we can find a $z$ such that $\l<p_s,z\r> = 1$ and $z\perp p_q$ for all $q\neq s$. Applying Lemma \ref{lem:hstens} to (\ref{eqn:noident}). We have
+		\begin{eqnarray*}
+			\sum_{i=1}^m  a_i p_i \l< p_i, \cdot \r> &=& \sum_{j=1}^l  b_j q_j \l<q_j,\cdot\r>\\
+			\Rightarrow \sum_{i=1}^m  a_i p_i \l< p_i, z \r> &=& \sum_{j=1}^l  b_j q_j \l<q_j,z\r>\\
+			\Rightarrow  a_s p_s  &=& \sum_{j=1}^l  b_j \l[\sum_{t=1}^m c_t^j p_t\r] \l<\sum_{u=1}^m c_u^j p_u,z\r>\\
+			\Rightarrow  a_s p_s  &=& \sum_{j=1}^l  b_j \l[\sum_{t=1}^m c_t^j p_t\r] c_s^j\\
+			&=& \sum_{j=1}^l  b_j \l[\sum_{t=1}^m c_t^j p_t\r] c_s^j\\
+			&=&    \sum_{t=1}^m \sum_{j=1}^l b_jc_t^j c_s^j p_t \\
+			&=&    \sum_{t=1}^m p_t \sum_{j=1}^l b_jc_t^j c_s^j. 
+		\end{eqnarray*}
+		Let $\alpha_t = \sum_{j=1}^l b_jc_t^j c_s^j$ and note that each summand is nonnegative. Now we have
+		\begin{eqnarray*}
+			a_s p_s = \sum_{t=1}^m \alpha_t p_t.
+		\end{eqnarray*}
+		We know that $\alpha_{s'}>0$ since $b_r c_s^r c_{s'}^r >0$. This violates the linear independence of $p_1,\ldots,p_m$. Now we have that for all $i$ there exists $j$ such that $p_i = q_j$. From the minimality of the representation of mixtures of measures it follows that $l=m$ and without loss of generality we can assert that $p_i = q_i$ for all $i$. Because $p_1 \otimes p_1, \ldots, p_m \otimes p_m$ are linearly independent it follows that $a_i = b_i$ for all $i$ and thus $\sP = \sP'$.
+
+	\end{proof}
+
+	\section{Discussion}
+	The following are a few observations related to the results.
+	\subsection{Possible Statistical Estimator or Test}
+	One interesting observation from the proof of Theorem \ref{thm:det} is that, if $\sP= \sum_{i=1}^{m}  a_i \mu_i$ is a mixture of measures with $p_i$ being the pdf for $\mu_i$ then if $n>m$ the rank of $\sum_{i=1}^m a_i p_i^{\otimes n} \otimes p_i^{\otimes n}$ will be exactly $m$. This suggests a statistical test for number of mixture components. The form of this tensor is amenable to spectral methods since it is a positive semi-definite tensor of order 2, which is akin to positive semi-definite matrix. Embedding the data with kernel mean mapping, using a universal kernel \cite{micchelli06}, seems like a promising approach to constructing such a test or estimator.
+	\subsection{Identifiability and the Value $2n-1$}
+	The value $2n-1$ seems to carry some significance for identifiability beyond the setting we proposed. This value can also be found in results concering metrics on trees \cite{pachter04}, hidden Markov models \cite{paz71}, and frame theory, with applications to signal processing \cite{balan06}. All of these results are related to identifiability of an object or the injectivity of an operator. We can offer no further insight as to why this value recurs, but it appears to be an algebraic phenomenon.
+
+\section{Meta-Algorithm}
+Here we will present a few algorithms for recovery of the mixture components. blah BLAH. For our first algorithm we will let $\sum_{i=1}^m w_i \mu_i$ be an arbitrary mixture of measures with $p_1,\ldots,p_m$ being densities representing $\mu_1,\ldots,\mu_m$. We will also assume that $p_1,\ldots,p_m$ have distinct norms. Let
+\begin{eqnarray*}
+	C = \sum_{i=1}^m w_i p_i^{\otimes m-1} \l<p_i^{\otimes m-1} ,\cdot\r>.
+\end{eqnarray*}
+Here $C$ is a PSD operator $L^2\left( \Omega,\sF,\xi \right)$ to itself. Let $C^\dagger$ be the pseudo-inverse of $C$ and $W = \sqrt{C^\dagger}$. Now $W$ is an operator which whitens $\sqrt{w_1} p_1^{\otimes m-1},\ldots, \sqrt{w_m}p_m^{\otimes m-1}$. That is $W \sqrt{w_1} p_1^{\otimes m-1},\ldots,W \sqrt{w_m}p_m^{\otimes m-1}$ are orthonormal vectors. Now we can construct the following tensor
+	\begin{eqnarray*}
+		\sum_{i=1}^m w_i p_i\otimes W p_i^{\otimes m-1} \otimes p_i\otimes W p_i^{\otimes m-1}
+	\end{eqnarray*}
+Which can again be represnented as a PSD operator
+ 	\begin{eqnarray*}
+		T &\triangleq& \sum_{i=1}^m w_i p_i\otimes W p_i^{\otimes m-1} \l< p_i\otimes W p_i^{\otimes m-1},\cdot\r> \\
+		&=& \sum_{i=1}^m \sqrt{w_i} p_i\otimes W p_i^{\otimes m-1} \l< \sqrt{w_i}p_i\otimes W \sqrt{w_i} p_i^{\otimes m-1},\cdot\r>.
+	\end{eqnarray*}
+	For $i\neq j$ it follows that $\sqrt{w_i} p_i\otimes W p_i^{\otimes m-1} \perp \sqrt{w_j} p_j\otimes W p_j^{\otimes m-1}$. To see this 
+	\begin{eqnarray*}
+		\l< p_i\otimes W \sqrt{w_i} p_i^{\otimes m-1} ,  p_j\otimes \sqrt{w_j}W p_j^{\otimes m-1}\r>
+		&=&\l<p_i,p_j\r> \l<  W \sqrt{w_i} p_i^{\otimes m-1} ,\sqrt{w_j}W p_j^{\otimes m-1}\r>\\
+		&=&\l<p_i,p_j\r> 0 \\
+		&=& 0.
+	\end{eqnarray*}
+	Also note that 
+	\begin{eqnarray*}
+		\l\| p_i\otimes W \sqrt{w_i} p_i^{\otimes m-1} \r\|^2
+		&=&\l< p_i\otimes W \sqrt{w_i} p_i^{\otimes m-1} ,p_i\otimes W \sqrt{w_i} p_i^{\otimes m-1} \r>\\
+		&=&\l< p_i ,p_i \r>\l<W \sqrt{w_i} p_i^{\otimes m-1},W \sqrt{w_i} p_i^{\otimes m-1} \r> \\
+		&=&\l\|p_1\r\|^2.
+	\end{eqnarray*}
+	If $p_1,\ldots,p_m$ have distinct norms them it follows that $p_1\otimes W \sqrt{w_1} p_1^{\otimes m-1},\ldots,p_m\otimes W \sqrt{w_m} p_m^{\otimes m-1}$ are eigenvectors of $T$ with distinct eigenvalues. Given an eigenvector of $T$, $p_i\otimes W \sqrt{w_i} p_i^{\otimes m-1}$ we need only transform it into a linear operator $p_i\l< W \sqrt{w_i} p_i^{\otimes m-1},\cdot\r>$  to recover $p_i$, scaled by some consant. From the reconstructed $p_1,\ldots,p_m$ one can recover the mixture proportions. Because $p_1^{\otimes m-1},\ldots,p_m^{\otimes m-1}$ are linearly independent and we have access to $\sum_{i=1}^m w_i p_i^{\otimes m-1}$ we need only solve for the coefficients in the last summation.
+
+	We can construct a similar algorithm with linearly independent components and $4$ samples per group. If $p_1,\otimes p_m$ are linearly independent and have distinct norms then we can whiten the mixture components by taking the square root of the inverse of the operator $\sum_{i=1}^m w_i p_i \l<p_i,\cdot\r>$ and proceeding similarly.
+	\bibliographystyle{plain}
+	\bibliography{rvdm}
+	\appendix
+			\section{Additional Proofs}
+	Some of the proofs use Hilbert-Schmidt operators. See Definition \ref{def:hs} for the definition of Hilbert-Schmidt operator.
+	\begin{proof}[Proof of Lemma \ref{lem:represent}]
+		Because both representations are minimal it follows that $\alpha'_i \neq 0$ for all $i$ and $\nu_i' \neq \nu_j'$ for all $i \neq j$. From this we know $\sQ\left( \l\{\nu_i'\r\} \right) \neq 0$ for all $i$. Because $\sQ\left( \l\{\nu_i'\r\} \right) \neq 0$ for all $i$ it follows that for any $i$ there exists some $j$ such that $\nu_i' = \nu_j$. Let $\psi: \left[ r \right] \to \left[ r \right]$ be a function satisfying $\nu_i' = \nu_{\psi\left( i \right)}$. Because the elements $\nu_1,\ldots,\nu_r$ are also distinct, $\psi$ must be injective and thus a permutation. Again from this distinctness we get that, for all $i$, $\sQ\left( \left\{ \nu_i' \right\}  \right)= \alpha'_i =\alpha_{\psi\left( i \right)}$ and we are done.
+	\end{proof}
+
+	\begin{proof}[Proof of Lemma \ref{lem:ident} and \ref{lem:det}]
+		We will proceed by contradiction. Let $\sP = \sum_{i=1}^m a_i \delta_{\mu_i}$ be $n$-identifiable/determined, let $\sP' = \sum_{j=1}^l b_j \delta_{\nu_j}$ be a different mixture of measures, with $l\le m$ for the $n$-identifiable case, and 
+		\begin{eqnarray*}
+			\sum_{i=1}^m a_i \mu_i^{\times q} = \sum_{j=1}^l b_j \nu_j^{\times q}
+		\end{eqnarray*}
+		for some $q>n$. Let $A \in \sF^{\times n}$ be arbitrary. We have
+		\begin{eqnarray*}
+			\sum_{i=1}^m a_i \mu_i^{\times q} &=& \sum_{j=1}^l b_j \nu_j^{\times q}\\
+			\Rightarrow \sum_{i=1}^m a_i \mu_i^{\times q}\left( A\times \Omega^{\times q-n} \right) &=& \sum_{j=1}^l b_j \nu_j^{\times q}\left( A\times \Omega^{\times q-n} \right)\\
+			\Rightarrow \sum_{i=1}^m a_i \mu_i^{\times n}\left( A \right) &=& \sum_{j=1}^l b_j \nu_j^{\times n}\left( A  \right).
+		\end{eqnarray*}
+		This implies that $\sP$ is not $n$-identifiable/determined, a contradiction.
+	\end{proof}
+	\begin{proof}[Proof of Lemma \ref{lem:noident} and \ref{lem:nodet}]
+		Let a mixture of measures $\sP = \sum_{i=1}^m a_i \delta_{\mu_i}$ not be $n$-identifiable/determined. It follows that there exists a different mixture of measures $\sP' = \sum_{j=1}^l b_j \delta_{\nu_j}$, with $l\le m$ for the $n$-identifiability case, such that
+		\begin{eqnarray*}
+			\sum_{i=1}^m a_i \mu_i^{\times n} &=& \sum_{j=1}^l b_j \nu_j^{\times n}.
+		\end{eqnarray*}
+		Let $A \in \sF^{\times q}$ be arbitrary, we have
+		\begin{eqnarray*}
+			\sum_{i=1}^m a_i \mu_i^{\times n}\left( A\times \Omega^{\times n-q} \right) &=& \sum_{j=1}^l b_j \nu_j^{\times n}\left( A\times \Omega^{\times n-q} \right)\\
+			\Rightarrow \sum_{i=1}^m a_i \mu_i^{\times q}\left( A  \right) &=& \sum_{j=1}^l b_j \nu_j^{\times q}\left( A \right)
+		\end{eqnarray*}
+		and therefore $\sP$ is not $q$-identifiable/determined.
+	\end{proof}
+
+	\begin{proof}[Proof of Lemma \ref{lem:l2prod}]
+		Example 2.6.11 in \cite{kadison83} states that for any two $\sigma$-finite measure spaces $\left( S,\mathscr{S}, m \right), \left( S',\mathscr{S}', m' \right)$ there exists a unitary operator $U: L^2\left( S,\mathscr{S}, m \right) \otimes L^2 \left( S',\mathscr{S'}, m' \right) \to L^2\left( S\times S', \mathscr{S}\times \mathscr{S'}, m\times m' \right)$ such that, for all $f,g$,
+		\begin{eqnarray*}
+			U(f\otimes g) = f(\cdot)g(\cdot).
+		\end{eqnarray*}
+		Because $\left( \Psi, \sG, \gamma \right)$ is a $\sigma$-finite measure space it follows that $\left( \Psi^{\times m}, \sG^{\times m}, \gamma^{\times m} \right)$ is a $\sigma$-finite measure space for all $m\in \mathbb{N}$. We will now proceed by induction. Clearly the lemma holds for $n=1$. Suppose the lemma holds for $n-1$. From the induction hypothesis we know that there exists a unitary transform $U_{n-1}: L^2\left( \Psi, \sG, \gamma \right)^{\otimes n-1} \to L^2 \left( \Psi^{\times n-1} ,\sG ^{\times n-1}  , \gamma^{\times n-1} \right)$ such that for all simple tensors $f_1\otimes\cdots \otimes f_{n-1} \in L^2\left( \Psi, \sG, \gamma \right)^{\otimes n-1}$ we have $U_{n-1}\left( f_1\otimes\cdots \otimes f_{n-1} \right) = f_1(\cdot)\cdots f_{n-1}\left( \cdot \right)$. Combining $U_{n-1}$ with the identity map via Lemma \ref{lem:unitprod} we can construct a unitary operator $T_n: L^2\left( \Psi, \sG, \gamma \right)^{\otimes n-1} \otimes L^2\left( \Psi, \sG, \gamma \right) \to L^2 \left( \Psi^{\times n-1} ,\sG ^{\times n-1}  , \gamma^{\times n-1} \right) \otimes L^2\left( \Psi, \sG, \gamma \right)$, which maps $f_1\otimes\cdots\otimes f_{n-1}  \otimes f_n \mapsto f_1(\cdot)\cdots f_{n-1}(\cdot) \otimes f_n$.
+
+		From the aforementioned example there exists a unitary transform $K_n:L^2\left( \Psi^{\times n-1},\sG^{\times n-1}, \gamma^{\times n-1} \right)\otimes L^2\left( \Psi,\sG, \gamma \right)\to L^2 \left( \Psi^{\times n-1} \times \Psi,\sG ^{\times n-1} \times \sG , \gamma^{\times n-1}\times \gamma\right)$ which maps simple tensors $g\otimes g' \in L^2\left( \Psi^{\times n-1},\sG^{\times n-1}, \gamma^{\times n-1} \right)\otimes L^2\left( \Psi,\sG, \gamma \right)$ as $K_n\left( g\otimes g' \right) = g(\cdot) g'(\cdot)$. Defining $U_n(\cdot)= K_n\left( T_n \left( \cdot \right) \right)$ yields our desired unitary transform.
+	\end{proof}
+
+	\begin{proof}[Proof of Lemma \ref{lem:unitprod}]
+		Proposition 2.6.12 in \cite{kadison83} states that there exists a continuous linear operator $\tilde{U}:H_1 \otimes \cdots \otimes H_n \to H_1' \otimes \cdots \otimes H_n'$ such that $\tilde{U}\left( h_1 \otimes\cdots \otimes h_n \right) = U_1(h_1) \otimes \cdots \otimes U_n(h_n)$ for all $h_1 \in H_1 ,\cdots, h_n \in H_n$. Let $\widehat{H}$ be the set of simple tensors in $H_1 \otimes \cdots \otimes H_n$ and $\widehat{H}'$ be the set of simple tensors in $H_1'\otimes \cdots \otimes H_n'$. Because $U_i$ is surjective for all $i$, clearly $\tilde{U}(\widehat{H}) = \widehat{H}'$. The linearity of $\tilde{U}$ implies that $\tilde{U}(\span(\widehat{H}))= \span(\widehat{H}')$. Because $\span(\widehat{H}')$ is dense in $H_1'\otimes \cdots \otimes H_n'$ the continuity of $\tilde{U}$ implies that $\tilde{U}(H_1\otimes\cdots \otimes H_n) = H_1'\otimes \cdots \otimes H_n'$ so $\tilde{U}$ is surjective. All that remains to be shown is that $\tilde{U}$ preserves the inner product. By the continuity of inner product we need only show that $\l<h, g\r>=\l<\tilde{U}(h), \tilde{U}(g)\r>$ for $h,g \in \span(\widehat{H})$. With this in mind let $h_1,\ldots, h_N,g_1,\ldots,g_M \in \widehat{H}$. We have the following
+		\begin{eqnarray*}
+			\l<\tilde{U}\l(\sum_{i=1}^N h_i\r),\tilde{U}\l(\sum_{j=1}^M g_j\r) \r>
+			&=& \l<\sum_{i=1}^N \tilde{U}\l(h_i\r),\sum_{j=1}^M \tilde{U}\l(g_j\r) \r>\\
+		 &=& \sum_{i=1}^N\sum_{j=1}^M\l< \tilde{U}\l(h_i\r), \tilde{U}\l(g_j\r) \r>\\
+		 &=& \sum_{i=1}^N\sum_{j=1}^M\l< h_i, g_j \r>\\
+		 &=& \l< \sum_{i=1}^Nh_i, \sum_{j=1}^M g_j \r>.
+		\end{eqnarray*}
+		We have now shown that $\tilde{U}$ is unitary which completes our proof.
+	\end{proof}
+	\begin{proof}[Proof of Lemma \ref{lem:linind}]
+		We will proceed by induction. For $n=2$ the lemma clearly holds. Suppose the lemma holds for $n-1$ and let $h_1,\ldots, h_n$ satisfy the assumptions in the lemma statement. Let $\alpha_1,\ldots, \alpha_n$ satisfy
+		\begin{eqnarray}
+			\sum_{i=1}^n \alpha_i h_i^{\otimes n-1}  = 0. \label{lisum}
+		\end{eqnarray}
+		To finish the proof we will show that $\alpha_1$ must be zero which can be generalized to any $\alpha_i$ without loss of generality.
+		Applying Lemma \ref{lem:hstens} to (\ref{lisum}) we get
+		\begin{eqnarray}
+			\sum_{i=1}^n \alpha_i h_i^{\otimes n-2}  \l<h_i, \cdot \r>  = 0. \label{lioper}
+		\end{eqnarray}
+		Because $h_1$ and $h_n$ are linearly independent we can choose $z$ such that $\l<h_1,z\r> \neq 0$ and $z\perp h_n$. Plugging $z$ into (\ref{lioper}) yields
+		\begin{eqnarray*}
+			\sum_{i=1}^{n-1} \alpha_i h_i^{\otimes n-2}\l<h_i, z \r>  = 0 
+		\end{eqnarray*}
+		and therefore $\alpha_1=0$ by the inductive hypothesis.
+	\end{proof}
+	\begin{proof}[Proof of Lemma \ref{lem:tensrank}]
+		Let $\dim\left( \span\left( h_1,\ldots,h_m \right) \right)= l$ and let $h = \sum_{i=1}^m h_i^{\otimes 2}$. Without loss of generality assume that $h_1,\ldots,h_l$ are linearly independent and nonzero. From Lemma \ref{lem:hstens} there exists a unitary transform  $U:H\otimes H \to \hs\left( H,H \right)$ which, for any simple tensor $x\otimes y$, we have $U(x\otimes y) = x\l<y,\cdot\r>$.
+
+		First we will show that the rank is greater than or equal to $l$ by contradiction. Suppose that $g = \sum_{i=1}^{l'}x_i \otimes y_i = h$ with $l'<l$. Since $l'<l$ there must exist some $j$ such that $h_j \notin \span\left( x_1,\ldots,x_{l'} \right)$. Let $z\perp x_1,\ldots,x_{l'}$ and $z \not\perp h_j$. Now we have
+		\begin{eqnarray*}
+			\l<z\otimes z, h\r> = \sum_{i=1}^m \l<z,h_i\r>^2 \ge \l<z,h_j\r>^2 > 0,
+		\end{eqnarray*}
+		but 
+		\begin{eqnarray*}
+			\l<z\otimes z, g\r> = \sum_{i=1}^{l'} \l<z,x_i\r> \l<z, y_i\r> = 0,
+		\end{eqnarray*}
+		a contradiction.
+
+		For the other direction, observe that $U(h)$ is a compact Hermitian operator and thus admits an eigen-decomposition (\cite{introhilb} Theorem 8.15). From this we have that $U(h) = \sum_{i=1}^\infty \lambda_i \l<\psi_i, \cdot\r> \psi_i$  with $\left( \psi_i \right)_{i=1}^\infty$ orthonormal and $\lambda_i\ge 0$ for all $i$. Clearly the span of $U\left( h \right) \le l$ and thus this decomposition has exactly $l$ nonzero terms. From this we can let $U(h) = \sum_{i=1}^l \lambda_i \l<\psi_i, \cdot\r> \psi_i$ and applying $U^{-1}$ we have that $h=\sum_{i=1}^l \lambda_i \psi_i^{\otimes 2}$. From this it follows that the rank of $h$ is less than or equal to $l$ and we are done.
+	\end{proof}
+
+	\begin{proof}[Proof of Lemma \ref{lem:himbed}]
+		Let $\pi= \sum_{i=1}^n \gamma_i$. Because $\pi$ is $\sigma$-finite for all $i$ we can define $f_i = \frac{d\gamma_i}{d\pi}$, where the derivatives are Radon-Nikodym derivatives. Let $f_k$ be arbitrary. We will first show that $f_k\le1$ $\pi$-almost everywhere. Suppose there exists a non $\pi$-null set $A \in \sG$ such that $f_i(A) >1$. Then we would have
+		\begin{eqnarray*}
+			\gamma_k\left( A \right)
+			&=& \int_A f_k d\pi	\\
+		 &>& \int_A 1 d\pi\\
+		 &=& \sum_{i=1}^n \gamma_i(A)\\
+		 &\ge& \gamma_k(A)
+		\end{eqnarray*}
+		a contradiction. From this we have
+		\begin{eqnarray*}
+			\int f_k^2 d\pi
+			&\le& \int 1 d\pi\\
+		 &\le& \sum_{i=1}^n \gamma_i(\Psi)\\
+		 &<& \infty.
+		\end{eqnarray*}
+		From our construction it is clear that $f_i \ge 0$ $\xi$-almost everywhere so we can assert $f_i \ge 0$ without issue.
+	\end{proof}
+
+	\begin{proof}[Proof of Lemma \ref{lem:radprod}]
+		The fact that $f$ is non-negative and integrable implies that the map $S \mapsto \int_S f^{\times n}d\pi^{\times n}$ is a bounded measure on $\l(\Psi^{\times n}, \sG^{\times n}\r)$ (see \cite{folland99} Exercise 2.12). 
+
+		Let $R= R_1 \times\cdots\times R_n$ be a rectangle in $\sG^{\times n}$. Let $\mathds{1}_S$ be the indicator function for a set $S$. Integrating over $R$ and using Tonelli's theorem we get
+		\begin{eqnarray*}
+			\int_R f^{\times n} d \pi^{\times n}
+			&=& \int \mathds{1}_Rf^{\times n}d \pi^{\times n}\\
+		 &=& \int \l(\prod_{i=1}^n \mathds{1}_{R_i}(x_i)\r)\l(\prod_{j=1}^n f(x_j)\r)d \pi^{\times n}\left( x_1,\ldots,x_n \right)\\
+		 &=& \int\cdots\int \l(\prod_{i=1}^n \mathds{1}_{R_i}(x_i)\r)\l(\prod_{j=1}^n f(x_j)\r)d \pi(x_1)\cdots d\pi(x_n)\\
+		 &=& \int\cdots\int \l(\prod_{i=1}^n \mathds{1}_{R_i}(x_i) f(x_i)\r)d \pi(x_1)\cdots d\pi(x_n)\\
+		 &=&  \prod_{i=1}^n\l(\int \mathds{1}_{R_i}(x_i) f(x_i)d \pi(x_i)\r)\\
+		 &=&  \prod_{i=1}^n\gamma(R_i)\\
+		 &=&  \gamma^{\times n}(R).
+		\end{eqnarray*}
+		Any product probability measure is uniquely determined by its measure over the rectangles (this is a consequence of Lemma 1.17 in \cite{fomp} and the definition of product $\sigma$-algebra) therefore, for all $B\in \sG^{\times n}$,
+		\begin{eqnarray*}
+			\gamma^{\times n}\left( B \right) = \int_B f^{\times n} d\pi^{\times n}.
+		\end{eqnarray*}
+
+	\end{proof}
+
+	% AOS,AOAS: If there are supplements please fill:
+	%\begin{supplement}[id=suppA]
+	%  \sname{Supplement A}
+	%  \stitle{Title}
+	%  \slink[doi]{10.1214/00-AOASXXXXSUPP}
+	%  \sdatatype{.pdf}" 
+	%  \sdescription{Some text}
+	%\end{supplement}
+
+
+	\end{document}
